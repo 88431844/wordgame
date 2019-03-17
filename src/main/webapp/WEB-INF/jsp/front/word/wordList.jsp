@@ -3,11 +3,10 @@
     String path = request.getContextPath();
     String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
 %>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE HTML>
 <head>
     <base href="<%=basePath%>">
-    <title>电影墙</title>
+    <title>识字游戏</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link href="static/css/style.css" rel="stylesheet" type="text/css" media="all"/>
@@ -38,9 +37,6 @@
 <body onload="myAlert()">
 <%@include file="../head.jsp"%>
 <!------------End Header ------------>
-
-
-
     <div>
             <audio controls autoplay></audio>
             <input onclick="startRecording()" type="button" value="录音" />
@@ -50,7 +46,7 @@
         </div>
 
    
-<audio src="uploadFile/test.wav" controls="controls" width="30px"></audio>
+<audio src="uploadFile/test.wav" controls="controls" width="30px">音频文件</audio>
     <script>
     var recorder;
     var audio = document.querySelector('audio');
@@ -67,7 +63,7 @@
         recorder.play(audio);
     }
     function uploadAudio() {
-        recorder.upload("asr", function (state, e) {
+        recorder.upload("word/asr", function (state, e) {
             switch (state) {
                 case 'uploading':
                     var percentComplete = Math.round(e.loaded * 100 / e.total) + '%';
@@ -88,11 +84,11 @@
     }
 
 </script>
-<form action="tts" method="post">
+<form action="word/tts" method="post">
     <table>
         <tr>
-            <td><label>username: </label></td>
-            <td><input type="text" id="username" name="username"></td>
+            <td><label>tts word: </label></td>
+            <td><input type="text" id="word" name="word"></td>
         </tr>
 
         <tr>
@@ -109,9 +105,7 @@
     });
 </script>
 <a href="#" id="toTop"><span id="toTopHover"> </span></a>
-<div style="display:none">
-    <script src='http://v7.cnzz.com/stat.php?id=155540&web_id=155540' language='JavaScript' charset='gb2312'></script>
-</div>
+
 </body>
 </html>
 

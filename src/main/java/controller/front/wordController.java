@@ -1,65 +1,60 @@
-package controller;
+package controller.front;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.iflytek.msp.cpdb.lfasr.client.LfasrClientImp;
 import com.iflytek.msp.cpdb.lfasr.exception.LfasrException;
 import com.iflytek.msp.cpdb.lfasr.model.LfasrType;
 import com.iflytek.msp.cpdb.lfasr.model.Message;
 import com.iflytek.msp.cpdb.lfasr.model.ProgressStatus;
-import entity.Muser;
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.disk.DiskFileItemFactory;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
-import org.apache.commons.io.FileUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
-import org.springframework.web.multipart.commons.CommonsMultipartResolver;
-import org.springframework.web.servlet.ModelAndView;
-import service.TestService;
 import com.jacob.activeX.ActiveXComponent;
 import com.jacob.com.Dispatch;
 import com.jacob.com.Variant;
+import dto.WordInfo;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
+import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import java.io.*;
-import java.util.*;
-
+import java.io.File;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.UUID;
 
 @Controller
-public class TestController {
+@RequestMapping("/word")
+public class wordController {
+   //tts setting start
+    // 音量 0-100
+    private static int volume = 100;
+    // 语音朗读速度 -10 到 +10
+    private static int rate = 1;
+    //tts setting end
+
+    //asr setting start
     // 等待时长（秒）
     private static int sleepSecond = 2;
     private static final LfasrType type = LfasrType.LFASR_STANDARD_RECORDED_AUDIO;
+    //asr setting end
 
     @RequestMapping("/tts")
-    public ModelAndView tts(@ModelAttribute Muser user) {
+    public ModelAndView tts(@ModelAttribute WordInfo wordInfo) {
 
-        System.out.println("-----TestController tts");
+        System.out.println("-----wordController tts");
         ActiveXComponent sap = new ActiveXComponent("Sapi.SpVoice");
 
         Dispatch sapo = sap.getObject();
         try {
-
             // 音量 0-100
-            sap.setProperty("Volume", new Variant(100));
+            sap.setProperty("Volume", new Variant(volume));
             // 语音朗读速度 -10 到 +10
-            sap.setProperty("Rate", new Variant(1));
-
-
-            System.out.println("请输入要朗读的内容：");
-            Scanner scan = new Scanner(System.in);
-//            String str=scan.next();
-
-            String str = user.getUsername();
+            sap.setProperty("Rate", new Variant(rate));
+            String str = wordInfo.getWord();
             // 执行朗读
             Dispatch.call(sapo, "Speak", new Variant(str));
 
@@ -70,18 +65,18 @@ public class TestController {
             sap.safeRelease();
         }
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("front/movie/movieWall");
+        modelAndView.setViewName("front/word/wordList");
         return modelAndView;
     }
 
     @RequestMapping("/asr")
-    public ModelAndView asr(HttpServletRequest request) throws  Exception {
-        System.out.println("-------- test asr");
-        String path = "";
+    public ModelAndView asr(HttpServletRequest request) {
+        System.out.println("-----wordController asr");
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("front/movie/movieWall");
+        modelAndView.setViewName("front/word/wordList");
 
-//       String message = request.getRequestURL().toString();
+
+        String path = "";
         //将当前上下文初始化给  CommonsMutipartResolver （多部分解析器）
         CommonsMultipartResolver multipartResolver=new CommonsMultipartResolver(
                 request.getSession().getServletContext());
@@ -99,23 +94,39 @@ public class TestController {
                 MultipartFile file=multiRequest.getFile(iter.next().toString());
                 if(file!=null)
                 {
+                    String localTempDir = "D:\\\\code\\\\wordgame\\\\target\\\\wordgame-1.0-SNAPSHOT\\\\uploadFile\\\\";
+                    String fileName = UUID.randomUUID() + ".wav";
+                    path = localTempDir + fileName;
+                    File tempFile = null;
+                    try {
+                        tempFile = new File(localTempDir + fileName);
+                        if (!tempFile.getParentFile().exists()) {
+                            tempFile.getParentFile().mkdirs();
+                        }
+                        if (!tempFile.exists()) {
+                            tempFile.createNewFile();
+                        }
 
-                     path="D:\\code\\wordgame\\target\\wordgame-1.0-SNAPSHOT\\uploadFile\\test.wav";
-                     File f = new File(path);
-                    if (f.exists()) {
-                        f.delete();
-                        System.out.println("---- del file !!");
+                        file.transferTo(tempFile);
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
-                    //上传
-                    file.transferTo(f);
-
                 }
             }
         }
 
-        String message = audioToMessage(path);
+        String message = processASRJson(audioToMessage(path));;
+        System.out.println("----- message : " + message);
         modelAndView.addObject("message",message);
 
+        return modelAndView;
+    }
+
+    @RequestMapping("/list")
+    public ModelAndView list() {
+        System.out.println("-----wordController list");
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("front/word/wordList");
         return modelAndView;
     }
 
@@ -155,10 +166,7 @@ public class TestController {
                 System.out.println("failed=" + uploadMsg.getFailed());
             }
         } catch (LfasrException e) {
-            // 上传异常，解析异常描述信息
-            Message uploadMsg = JSON.parseObject(e.getMessage(), Message.class);
-            System.out.println("ecode=" + uploadMsg.getErr_no());
-            System.out.println("failed=" + uploadMsg.getFailed());
+           e.printStackTrace();
         }
 
         // 循环等待音频处理结果
@@ -194,10 +202,7 @@ public class TestController {
                     }
                 }
             } catch (LfasrException e) {
-                // 获取进度异常处理，根据返回信息排查问题后，再次进行获取
-                Message progressMsg = JSON.parseObject(e.getMessage(), Message.class);
-                System.out.println("ecode=" + progressMsg.getErr_no());
-                System.out.println("failed=" + progressMsg.getFailed());
+              e.printStackTrace();
             }
         }
 
@@ -208,22 +213,28 @@ public class TestController {
             if (resultMsg.getOk() == 0) {
                 // 打印转写结果
                 ret = resultMsg.getData();
-                System.out.println("resultMsg : "+ret);
+                System.out.println("---- ASR resultMsg : "+ret);
             } else {
                 // 获取任务结果失败
                 System.out.println("ecode=" + resultMsg.getErr_no());
                 System.out.println("failed=" + resultMsg.getFailed());
             }
         } catch (LfasrException e) {
-            // 获取结果异常处理，解析异常描述信息
-            Message resultMsg = JSON.parseObject(e.getMessage(), Message.class);
-            System.out.println("ecode=" + resultMsg.getErr_no());
-            System.out.println("failed=" + resultMsg.getFailed());
+           e.printStackTrace();
         }
 
         long e = System.currentTimeMillis();
         System.out.println(
-                "-------- cost :"+(e-s)/1000);
+                "-------- cost :"+(e-s)/1000 + " s");
         return ret;
+    }
+    private String processASRJson(String json){
+        JSONArray allArray = JSONArray.parseArray(json);
+        String wordResultList = String.valueOf(allArray.get(0));
+        JSONObject jsonObject = JSONObject.parseObject(wordResultList);
+        JSONArray wordList = JSONArray.parseArray(String.valueOf(jsonObject.get("wordsResultList")));
+        String wordStr = String.valueOf(wordList.get(0));
+        JSONObject wordJson = JSONObject.parseObject(wordStr);
+        return String.valueOf(wordJson.get("wordsName"));
     }
 }
