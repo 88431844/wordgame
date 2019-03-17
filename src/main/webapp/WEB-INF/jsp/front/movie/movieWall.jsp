@@ -50,7 +50,7 @@
         </div>
 
    
-
+<audio src="uploadFile/test.wav" controls="controls" width="30px"></audio>
     <script>
     var recorder;
     var audio = document.querySelector('audio');
@@ -67,15 +67,15 @@
         recorder.play(audio);
     }
     function uploadAudio() {
-        recorder.upload("UploadVideoServlet.do", function (state, e) {
+        recorder.upload("asr", function (state, e) {
             switch (state) {
                 case 'uploading':
-                    //var percentComplete = Math.round(e.loaded * 100 / e.total) + '%';
+                    var percentComplete = Math.round(e.loaded * 100 / e.total) + '%';
                     break;
                 case 'ok':
-                    //alert(e.target.responseText);
-                    //alert("上传成功");
-                    window.location.href="VideoSearchServlet.do";
+                    alert(e.target.responseText);
+                    alert("上传成功");
+                    window.location.href="asr";
                     break;
                 case 'error':
                     alert("上传失败");
