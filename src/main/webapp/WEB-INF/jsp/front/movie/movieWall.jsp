@@ -73,9 +73,9 @@
                     var percentComplete = Math.round(e.loaded * 100 / e.total) + '%';
                     break;
                 case 'ok':
-                    alert(e.target.responseText);
-                    alert("上传成功");
-                    window.location.href="asr";
+                    // alert(e.target.responseText);
+                    alert("message : " + "${message}");
+                    // window.location.href="asr";
                     break;
                 case 'error':
                     alert("上传失败");
