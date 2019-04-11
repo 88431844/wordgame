@@ -22,19 +22,33 @@
             $('#slider').nivoSlider();
         });
     </script>
-    <script>
-        function myAlert() {
-            var message = "${message}";
-            var messageStr = message.toString();
-            if (null != messageStr && !"".endsWith(messageStr)) {
-                alert(messageStr);
-            }
+    <%--<script>--%>
+        <%--function myAlert() {--%>
+            <%--&lt;%&ndash;var message = "${message}";&ndash;%&gt;--%>
+            <%--&lt;%&ndash;var messageStr = message.toString();&ndash;%&gt;--%>
+            <%--&lt;%&ndash;if (null != messageStr && !"".endsWith(messageStr)) {&ndash;%&gt;--%>
+                <%--&lt;%&ndash;alert(messageStr);&ndash;%&gt;--%>
+            <%--&lt;%&ndash;}&ndash;%&gt;--%>
 
-        }
+            <%--<%--%>
+                <%--String sessionMessage = (String)session.getAttribute("sessionMessage");--%>
+                <%--session.setAttribute("sessionMessage",null);--%>
+                <%--if (null != sessionMessage){--%>
+                    <%--out.print("alert(sessionMessage : "+sessionMessage+");");--%>
+                <%--}--%>
 
-    </script>
+                <%--String requestMessage = (String)request.getAttribute("requestMessage");--%>
+                <%--request.setAttribute("requestMessage",null);--%>
+                <%--if (null != requestMessage){--%>
+                    <%--out.print("alert(requestMessage : "+requestMessage+");");--%>
+                <%--}--%>
+            <%--%>--%>
+
+        <%--}--%>
+
+    <%--</script>--%>
 </head>
-<body onload="myAlert()">
+<body>
 <%@include file="../head.jsp"%>
 <!------------End Header ------------>
     <div>
@@ -70,8 +84,8 @@
                     break;
                 case 'ok':
                     // alert(e.target.responseText);
-                    alert("message : " + "${message}");
-                    // window.location.href="asr";
+                    <%--alert("message : " + <%String message = (String)session.getAttribute("sessionMessage"); out.print(message);%>);--%>
+                    window.location.href="word/toMessage";
                     break;
                 case 'error':
                     alert("上传失败");

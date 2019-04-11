@@ -21,6 +21,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -70,7 +71,7 @@ public class wordController {
     }
 
     @RequestMapping("/asr")
-    public ModelAndView asr(HttpServletRequest request) {
+    public ModelAndView asr(HttpServletRequest request, HttpSession session) {
         System.out.println("-----wordController asr");
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("front/word/wordList");
@@ -115,10 +116,13 @@ public class wordController {
             }
         }
 
-        String message = processASRJson(audioToMessage(path));;
+        String message = processASRJson(audioToMessage(path));
         System.out.println("----- message : " + message);
+        String requestMessage = message;
+        String sessionMessage = message;
         modelAndView.addObject("message",message);
-
+        request.setAttribute("requestMessage",requestMessage);
+        session.setAttribute("sessionMessage",sessionMessage);
         return modelAndView;
     }
 
@@ -227,6 +231,21 @@ public class wordController {
         System.out.println(
                 "-------- cost :"+(e-s)/1000 + " s");
         return ret;
+    }
+    @RequestMapping("/toMessage")
+    public ModelAndView toMessage(HttpServletRequest request,HttpSession session){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("front/word/message");
+        String requestMessage = (String)request.getAttribute("requestMessage");
+        if (null != requestMessage){
+            request.setAttribute("requestMessage",requestMessage);
+        }
+
+        String sessionMessage = (String)session.getAttribute("sessionMessage");
+        if (null != sessionMessage){
+            session.setAttribute("sessionMessage",sessionMessage);
+        }
+        return modelAndView;
     }
     private String processASRJson(String json){
         JSONArray allArray = JSONArray.parseArray(json);
