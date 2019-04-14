@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.ChildWordMapper">
+  <resultMap id="BaseResultMap" type="entity.ChildWord">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="wordid" jdbcType="INTEGER" property="wordid" />
+    <result column="childid" jdbcType="INTEGER" property="childid" />
+    <result column="righttimes" jdbcType="INTEGER" property="righttimes" />
+    <result column="errortimes" jdbcType="INTEGER" property="errortimes" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, wordid, childid, righttimes, errortimes
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from childword
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from childword
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.ChildWord">
+    insert into childword (id, wordid, childid, 
+      righttimes, errortimes)
+    values (#{id,jdbcType=INTEGER}, #{wordid,jdbcType=INTEGER}, #{childid,jdbcType=INTEGER}, 
+      #{righttimes,jdbcType=INTEGER}, #{errortimes,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="entity.ChildWord">
+    insert into childword
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="wordid != null">
+        wordid,
+      </if>
+      <if test="childid != null">
+        childid,
+      </if>
+      <if test="righttimes != null">
+        righttimes,
+      </if>
+      <if test="errortimes != null">
+        errortimes,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="wordid != null">
+        #{wordid,jdbcType=INTEGER},
+      </if>
+      <if test="childid != null">
+        #{childid,jdbcType=INTEGER},
+      </if>
+      <if test="righttimes != null">
+        #{righttimes,jdbcType=INTEGER},
+      </if>
+      <if test="errortimes != null">
+        #{errortimes,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.ChildWord">
+    update childword
+    <set>
+      <if test="wordid != null">
+        wordid = #{wordid,jdbcType=INTEGER},
+      </if>
+      <if test="childid != null">
+        childid = #{childid,jdbcType=INTEGER},
+      </if>
+      <if test="righttimes != null">
+        righttimes = #{righttimes,jdbcType=INTEGER},
+      </if>
+      <if test="errortimes != null">
+        errortimes = #{errortimes,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.ChildWord">
+    update childword
+    set wordid = #{wordid,jdbcType=INTEGER},
+      childid = #{childid,jdbcType=INTEGER},
+      righttimes = #{righttimes,jdbcType=INTEGER},
+      errortimes = #{errortimes,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

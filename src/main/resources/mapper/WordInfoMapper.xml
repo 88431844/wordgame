@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.WordInfoMapper">
+  <resultMap id="BaseResultMap" type="entity.WordInfo">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="wordname" jdbcType="VARCHAR" property="wordname" />
+    <result column="sound" jdbcType="VARCHAR" property="sound" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, wordname, sound
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from wordinfo
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from wordinfo
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.WordInfo">
+    insert into wordinfo (id, wordname, sound
+      )
+    values (#{id,jdbcType=INTEGER}, #{wordname,jdbcType=VARCHAR}, #{sound,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="entity.WordInfo">
+    insert into wordinfo
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="wordname != null">
+        wordname,
+      </if>
+      <if test="sound != null">
+        sound,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="wordname != null">
+        #{wordname,jdbcType=VARCHAR},
+      </if>
+      <if test="sound != null">
+        #{sound,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.WordInfo">
+    update wordinfo
+    <set>
+      <if test="wordname != null">
+        wordname = #{wordname,jdbcType=VARCHAR},
+      </if>
+      <if test="sound != null">
+        sound = #{sound,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.WordInfo">
+    update wordinfo
+    set wordname = #{wordname,jdbcType=VARCHAR},
+      sound = #{sound,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
