@@ -1,6 +1,8 @@
 package dao;
 
 import entity.WordRoom;
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
 
 public interface WordRoomMapper {
     int deleteByPrimaryKey(Integer id);
@@ -14,4 +16,8 @@ public interface WordRoomMapper {
     int updateByPrimaryKeySelective(WordRoom record);
 
     int updateByPrimaryKey(WordRoom record);
+
+  int haveWordRoom(@Param("wordRoomName") String wordRoomName);
+
+    List<WordRoom> list();
 }

@@ -3,6 +3,8 @@ package entity;
 public class WordInfo {
     private Integer id;
 
+    private Integer wordroomid;
+
     private String wordname;
 
     private String sound;
@@ -13,6 +15,14 @@ public class WordInfo {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Integer getWordroomid() {
+        return wordroomid;
+    }
+
+    public void setWordroomid(Integer wordroomid) {
+        this.wordroomid = wordroomid;
     }
 
     public String getWordname() {

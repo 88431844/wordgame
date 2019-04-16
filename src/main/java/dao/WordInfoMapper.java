@@ -1,6 +1,8 @@
 package dao;
 
+import dto.WordInfoDto;
 import entity.WordInfo;
+import java.util.List;
 
 public interface WordInfoMapper {
     int deleteByPrimaryKey(Integer id);
@@ -14,4 +16,8 @@ public interface WordInfoMapper {
     int updateByPrimaryKeySelective(WordInfo record);
 
     int updateByPrimaryKey(WordInfo record);
+
+    int haveWord(WordInfo wordInfo);
+
+    List<WordInfoDto> listWord();
 }

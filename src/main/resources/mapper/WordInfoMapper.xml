@@ -3,11 +3,12 @@
 <mapper namespace="dao.WordInfoMapper">
   <resultMap id="BaseResultMap" type="entity.WordInfo">
     <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="wordroomid" jdbcType="INTEGER" property="wordroomid" />
     <result column="wordname" jdbcType="VARCHAR" property="wordname" />
     <result column="sound" jdbcType="VARCHAR" property="sound" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, wordname, sound
+    id, wordroomid, wordname, sound
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -20,16 +21,19 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="entity.WordInfo">
-    insert into wordinfo (id, wordname, sound
-      )
-    values (#{id,jdbcType=INTEGER}, #{wordname,jdbcType=VARCHAR}, #{sound,jdbcType=VARCHAR}
-      )
+    insert into wordinfo (id, wordroomid, wordname, 
+      sound)
+    values (#{id,jdbcType=INTEGER}, #{wordroomid,jdbcType=INTEGER}, #{wordname,jdbcType=VARCHAR}, 
+      #{sound,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="entity.WordInfo">
     insert into wordinfo
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
+      </if>
+      <if test="wordroomid != null">
+        wordroomid,
       </if>
       <if test="wordname != null">
         wordname,
@@ -42,6 +46,9 @@
       <if test="id != null">
         #{id,jdbcType=INTEGER},
       </if>
+      <if test="wordroomid != null">
+        #{wordroomid,jdbcType=INTEGER},
+      </if>
       <if test="wordname != null">
         #{wordname,jdbcType=VARCHAR},
       </if>
@@ -53,6 +60,9 @@
   <update id="updateByPrimaryKeySelective" parameterType="entity.WordInfo">
     update wordinfo
     <set>
+      <if test="wordroomid != null">
+        wordroomid = #{wordroomid,jdbcType=INTEGER},
+      </if>
       <if test="wordname != null">
         wordname = #{wordname,jdbcType=VARCHAR},
       </if>
@@ -64,8 +74,28 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="entity.WordInfo">
     update wordinfo
-    set wordname = #{wordname,jdbcType=VARCHAR},
+    set wordroomid = #{wordroomid,jdbcType=INTEGER},
+      wordname = #{wordname,jdbcType=VARCHAR},
       sound = #{sound,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="haveWord" parameterType="entity.WordInfo" resultType="java.lang.Integer">
+    select
+    count(1)
+    from wordinfo
+    where wordroomid = #{wordroomid} and wordname = #{wordname}
+  </select>
+
+
+  <select id="listWord" resultType="dto.WordInfoDto">
+    select
+    w.id as id,
+    w.wordroomid as wordroomid,
+    w.wordname as wordname,
+    w.sound as sound,
+    m.wordroomname as wordRoomName
+    from wordinfo as w,wordroom as m
+    where w.wordroomid = m.id order by w.id desc
+  </select>
 </mapper>

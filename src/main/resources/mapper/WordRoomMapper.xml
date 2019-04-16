@@ -55,4 +55,18 @@
     set wordroomname = #{wordroomname,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="haveWordRoom" resultType="java.lang.Integer">
+    select
+    count(1)
+    from wordroom
+    where wordroomname = #{wordRoomName}
+  </select>
+
+  <select id="list" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from wordroom
+    where 1=1 order by id desc
+  </select>
 </mapper>
