@@ -51,16 +51,16 @@
     <script>
         function del(id) {
             if (confirm('您确定删除吗？')) {
-                window.location.href = "cinema/delCinema?id=" + id;
+                window.location.href = "backWord/del?id=" + id;
             }
         }
 
         function toEdit(id) {
-            window.location.href = "cinema/toEditCinema?id=" + id;
+            window.location.href = "backWord/toEdit?id=" + id;
         }
 
         function toAdd() {
-            window.location.href = "cinema/toAddCinema";
+            window.location.href = "backWord/toAdd";
         }
 
         function myAlert() {
@@ -103,10 +103,10 @@
             <ul class="breadcrumb">
                 <li>
                     <i class="ace-icon fa fa-home home-icon"></i>
-                    <span>查看影院</span>
+                    <span>查看汉字</span>
                 </li>
                 <li>
-                    <button onclick="toAdd()">添加影院</button>
+                    <button onclick="toAdd()">添加汉字</button>
                 </li>
             </ul><!-- /.breadcrumb -->
         </div>
@@ -127,31 +127,29 @@
                                 <thead>
                                 <tr>
 
-                                    <th width="20%">影院名称</th>
-                                    <th width="15%">影院电话</th>
-                                    <th width="40%">影院地址</th>
+                                    <th width="20%">汉字名称</th>
+                                    <th width="15%">所属字库</th>
                                     <th width="25%">操作</th>
                                 </tr>
                                 </thead>
 
                                 <tbody>
 
-                                <c:forEach items="${cinemaList}" var="cinemaList">
+                                <c:forEach items="${wordInfoDtoList}" var="wordInfoDtoList">
                                     <tr>
 
-                                        <td><span>${cinemaList.name}</span></td>
-                                        <td><span>${cinemaList.phone}</span></td>
-                                        <td><span>${cinemaList.addr}</span></td>
+                                        <td><span>${wordInfoDtoList.wordname}</span></td>
+                                        <td><span>${wordInfoDtoList.wordRoomName}</span></td>
                                         <td>
                                             <div class="">
-                                                <button class="green" onclick="toEdit(${cinemaList.id})">
+                                                <button class="green" onclick="toEdit(${wordInfoDtoList.id})">
                                                     <i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
-                                                    编辑影院
+                                                    编辑汉字
                                                 </button>
 
-                                                <button class="red" onclick="del(${cinemaList.id})">
+                                                <button class="red" onclick="del(${wordInfoDtoList.id})">
                                                     <i class="ace-icon fa fa-trash-o bigger-120"></i>
-                                                    删除影院
+                                                    删除汉字
                                                 </button>
                                             </div>
                                         </td>
@@ -212,7 +210,7 @@
                     bAutoWidth: true,
                     "aoColumns": [
                         {"bSortable": false},
-                        null, null,
+                        null,
                         {"bSortable": false}
                     ],
                     "aaSorting": [],

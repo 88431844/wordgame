@@ -2,6 +2,8 @@ package dao;
 
 import dto.WordInfoDto;
 import entity.WordInfo;
+import org.apache.ibatis.annotations.Param;
+
 import java.util.List;
 
 public interface WordInfoMapper {
@@ -20,4 +22,6 @@ public interface WordInfoMapper {
     int haveWord(WordInfo wordInfo);
 
     List<WordInfoDto> listWord();
+
+    WordInfoDto getWordById(@Param("id") int id);
 }

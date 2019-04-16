@@ -36,10 +36,7 @@
                         <img class="nav-user-photo" src="static/assets/avatars/user.jpg" alt="Jason's Photo"/>
                         <span class="user-info">
 									<small>欢迎</small>
-                            <%
-                                out.print(session.getAttribute("adminUserName"));
-                            %>
-								</span>
+						</span>
 
                         <i class="ace-icon fa fa-caret-down"></i>
                     </a>
@@ -47,9 +44,9 @@
                     <ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
 
                         <li>
-                            <a href="admin/adminLogout">
+                            <a href="word/list">
                                 <i class="ace-icon fa fa-power-off"></i>
-                                登出
+                                退出
                             </a>
                         </li>
                     </ul>

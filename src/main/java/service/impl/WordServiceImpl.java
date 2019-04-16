@@ -37,7 +37,7 @@ public class WordServiceImpl implements WordService {
   }
 
   @Override
-  public void updateWordRoom(WordRoomDto wordRoomDto) {
+  public void editWordRoom(WordRoomDto wordRoomDto) {
     WordRoom wordRoom = new WordRoom();
     wordRoom.setId(wordRoomDto.getId());
     wordRoom.setWordroomname(wordRoomDto.getWordRoomName());
@@ -65,8 +65,23 @@ public class WordServiceImpl implements WordService {
   }
 
   @Override
-  public void updateWord(WordInfo wordInfo) {
+  public void editWord(WordInfo wordInfo) {
     wordInfoMapper.updateByPrimaryKeySelective(wordInfo);
+  }
+
+  @Override
+  public WordInfoDto getWordById(int id) {
+    return wordInfoMapper.getWordById(id);
+  }
+
+  @Override
+  public WordRoom getByWordRoomId(int id) {
+    return wordRoomMapper.selectByPrimaryKey(id);
+  }
+
+  @Override
+  public int wordRoomHaveWord(int id) {
+    return wordRoomMapper.wordRoomHaveWord(id);
   }
 
   @Override

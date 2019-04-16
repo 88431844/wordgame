@@ -20,8 +20,14 @@ public class LoginController {
     public ModelAndView childLogin(String childName, HttpSession session){
         ModelAndView modelAndView = new ModelAndView();
         ChildInfo childInfo = childInfoMapper.getChildByName(childName);
-        session.setAttribute("childName",childName);
-        session.setAttribute("childId",childInfo.getId());
+        if (null != childInfo && childInfo.getId() > 0){
+            session.setAttribute("childName",childName);
+            session.setAttribute("childId",childInfo.getId());
+            modelAndView.addObject("message","登录成功");
+        }
+        else {
+            modelAndView.addObject("message","登录失败，请检查儿童名称是否存在");
+        }
         modelAndView.setViewName("front/word/wordList");
         return modelAndView;
     }

@@ -17,6 +17,12 @@ public class BackWordRoomController {
     @Autowired
     private WordService wordService;
 
+    @RequestMapping("/toAdd")
+    public ModelAndView toAdd(){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("back/wordroom/addWordRoom");
+        return modelAndView;
+    }
     @RequestMapping("/add")
     public ModelAndView add(String wordRoomName){
         ModelAndView modelAndView = new ModelAndView();
@@ -33,19 +39,33 @@ public class BackWordRoomController {
     @RequestMapping("/del")
     public ModelAndView del(@RequestParam("id") int id){
         ModelAndView modelAndView = new ModelAndView();
-        wordService.delWordRoom(id);
-        modelAndView.addObject("message","删除成功");
+        if (0 == wordService.wordRoomHaveWord(id)){
+            wordService.delWordRoom(id);
+            modelAndView.addObject("message","删除成功");
+        }
+        else {
+            modelAndView.addObject("message","删除失败，字库下面有汉字");
+        }
+
         return listWordRoom(modelAndView);
     }
 
-    @RequestMapping("/update")
-    public ModelAndView update(WordRoomDto wordRoomDto){
+    @RequestMapping("/toEdit")
+    public ModelAndView toEdit(@RequestParam("id") int id){
+        ModelAndView modelAndView = new ModelAndView();
+        WordRoom wordRoom = wordService.getByWordRoomId(id);
+        modelAndView.addObject("wordRoom",wordRoom);
+        modelAndView.setViewName("back/wordroom/editWordRoom");
+        return modelAndView;
+    }
+    @RequestMapping("/edit")
+    public ModelAndView edit(WordRoomDto wordRoomDto){
         ModelAndView modelAndView = new ModelAndView();
         if (wordRoomDto.getOldName().equals(wordRoomDto.getWordRoomName())){
             modelAndView.addObject("message","更新成功");
         }
         else if (0 == wordService.haveWordRoom(wordRoomDto.getWordRoomName())){
-            wordService.updateWordRoom(wordRoomDto);
+            wordService.editWordRoom(wordRoomDto);
             modelAndView.addObject("message","更新成功");
         }
         else {

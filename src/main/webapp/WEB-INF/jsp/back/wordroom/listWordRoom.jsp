@@ -10,7 +10,7 @@
     <base href="<%=basePath%>">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
     <meta charset="utf-8"/>
-    <title>查看影院</title>
+    <title>查看字库</title>
 
     <meta name="description" content=""/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
@@ -51,16 +51,16 @@
     <script>
         function del(id) {
             if (confirm('您确定删除吗？')) {
-                window.location.href = "cinema/delCinema?id=" + id;
+                window.location.href = "backWordRoom/del?id=" + id;
             }
         }
 
         function toEdit(id) {
-            window.location.href = "cinema/toEditCinema?id=" + id;
+            window.location.href = "backWordRoom/toEdit?id=" + id;
         }
 
         function toAdd() {
-            window.location.href = "cinema/toAddCinema";
+            window.location.href = "backWordRoom/toAdd";
         }
 
         function myAlert() {
@@ -103,10 +103,10 @@
             <ul class="breadcrumb">
                 <li>
                     <i class="ace-icon fa fa-home home-icon"></i>
-                    <span>查看影院</span>
+                    <span>查看字库</span>
                 </li>
                 <li>
-                    <button onclick="toAdd()">添加影院</button>
+                    <button onclick="toAdd()">添加字库</button>
                 </li>
             </ul><!-- /.breadcrumb -->
         </div>
@@ -126,32 +126,25 @@
                             <table id="sample-table-2" class="table table-striped table-bordered table-hover">
                                 <thead>
                                 <tr>
-
-                                    <th width="20%">影院名称</th>
-                                    <th width="15%">影院电话</th>
-                                    <th width="40%">影院地址</th>
+                                    <th width="20%">字库名称</th>
                                     <th width="25%">操作</th>
                                 </tr>
                                 </thead>
-
                                 <tbody>
-
-                                <c:forEach items="${cinemaList}" var="cinemaList">
+                                <c:forEach items="${wordRoomList}" var="wordRoomList">
                                     <tr>
 
-                                        <td><span>${cinemaList.name}</span></td>
-                                        <td><span>${cinemaList.phone}</span></td>
-                                        <td><span>${cinemaList.addr}</span></td>
+                                        <td><span>${wordRoomList.wordroomname}</span></td>
                                         <td>
                                             <div class="">
-                                                <button class="green" onclick="toEdit(${cinemaList.id})">
+                                                <button class="green" onclick="toEdit(${wordRoomList.id})">
                                                     <i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
-                                                    编辑影院
+                                                    编辑字库
                                                 </button>
 
-                                                <button class="red" onclick="del(${cinemaList.id})">
+                                                <button class="red" onclick="del(${wordRoomList.id})">
                                                     <i class="ace-icon fa fa-trash-o bigger-120"></i>
-                                                    删除影院
+                                                    删除字库
                                                 </button>
                                             </div>
                                         </td>
@@ -212,7 +205,7 @@
                     bAutoWidth: true,
                     "aoColumns": [
                         {"bSortable": false},
-                        null, null,
+
                         {"bSortable": false}
                     ],
                     "aaSorting": [],

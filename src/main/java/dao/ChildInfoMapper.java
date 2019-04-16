@@ -3,6 +3,8 @@ package dao;
 import entity.ChildInfo;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 public interface ChildInfoMapper {
     int deleteByPrimaryKey(Integer id);
 
@@ -17,4 +19,8 @@ public interface ChildInfoMapper {
     int updateByPrimaryKey(ChildInfo record);
 
     ChildInfo getChildByName(@Param("childName") String childName);
+
+    int haveChild(@Param("childName") String childName);
+
+    List<ChildInfo> list();
 }

@@ -98,4 +98,16 @@
     from wordinfo as w,wordroom as m
     where w.wordroomid = m.id order by w.id desc
   </select>
+
+
+  <select id="getWordById" resultType="dto.WordInfoDto">
+    select
+    w.id as id,
+    w.wordroomid as wordroomid,
+    w.wordname as wordname,
+    w.sound as sound,
+    m.wordroomname as wordRoomName
+    from wordinfo as w,wordroom as m
+    where w.wordroomid = m.id and w.id = #{id} order by w.id desc
+  </select>
 </mapper>

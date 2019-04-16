@@ -51,7 +51,7 @@
     <![endif]-->
     <script>
         function toSetting() {
-            window.location.href = "child/listChild";
+            window.location.href = "backWordRoom/list";
         }
 
         function myAlert() {
@@ -103,7 +103,7 @@
                             out.print("<span>欢迎来到，识字游戏，请先登录！！</span>");
                         }
                     %>
-                        <form action="login/childLogin">
+                        <form action="login/childLogin" method="post">
                             <input type="text" name="childName" placeholder="宝宝名称">
                             <input type="submit"value="登录">
                         </form>

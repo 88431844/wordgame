@@ -10,7 +10,7 @@
     <base href="<%=basePath%>">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
     <meta charset="utf-8"/>
-    <title>编辑影院</title>
+    <title>编辑字库</title>
 
     <meta name="description" content=""/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
@@ -57,12 +57,12 @@
     <![endif]-->
     <script>
         function edit() {
-            var form = document.getElementById('cinema');
+            var form = document.getElementById('wordroom');
             form.submit();
         }
 
         function back() {
-            window.location.href = "cinema/listCinema";
+            window.location.href = "backWordRoom/list";
         }
 
     </script>
@@ -96,7 +96,7 @@
             <ul class="breadcrumb">
                 <li>
                     <i class="ace-icon fa fa-home home-icon"></i>
-                    <span>编辑影院</span>
+                    <span>编辑字库</span>
                 </li>
             </ul><!-- /.breadcrumb -->
         </div>
@@ -109,31 +109,15 @@
                 <div class="row">
                     <div class="col-xs-12">
                         <!-- PAGE CONTENT BEGINS -->
-                        <form class="form-horizontal" role="form" action="cinema/editCinema"
-                              method="post" id="cinema">
+                        <form class="form-horizontal" role="form" action="backWordRoom/edit"
+                              method="post" id="wordroom">
                             <!-- #section:elements.form -->
                             <div class="form-group">
-                                <label class="col-sm-3 control-label no-padding-right"> 影院名称 </label>
+                                <label class="col-sm-3 control-label no-padding-right"> 字库名称 </label>
 
                                 <div class="col-sm-9">
-                                    <input type="text" name="name" value="${cinema.name}" placeholder="电影名称"
+                                    <input type="text" name="name" value="${wordRoom.wordroomname}" placeholder="字库名称"
                                            class="col-xs-10 col-sm-5"/>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label no-padding-right"> 影院电话 </label>
-
-                                <div class="col-sm-9">
-                                    <input type="text" name="phone" value="${cinema.phone}" placeholder="影院电话"
-                                           class="col-xs-10 col-sm-5"/>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label no-padding-right"> 影院地址 </label>
-
-                                <div class="col-sm-9">
-                                    <input type="text" name="addr" value="${cinema.addr}"
-                                           placeholder="影院地址" class="col-xs-10 col-sm-5"/>
                                 </div>
                             </div>
 
@@ -152,8 +136,8 @@
                                 </div>
                             </div>
 
-                            <input type="hidden" name="id" value="${cinema.id}">
-                            <input type="hidden" name="oldName" value="${cinema.name}">
+                            <input type="hidden" name="id" value="${wordRoom.id}">
+                            <input type="hidden" name="oldName" value="${wordRoom.wordroomname}">
                         </form>
 
                     </div><!-- /.col -->

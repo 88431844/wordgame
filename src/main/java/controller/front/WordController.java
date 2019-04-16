@@ -11,7 +11,7 @@ import com.iflytek.msp.cpdb.lfasr.model.ProgressStatus;
 import com.jacob.activeX.ActiveXComponent;
 import com.jacob.com.Dispatch;
 import com.jacob.com.Variant;
-import dto.WordInfo;
+import entity.WordInfo;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -55,7 +55,7 @@ public class WordController {
             sap.setProperty("Volume", new Variant(volume));
             // 语音朗读速度 -10 到 +10
             sap.setProperty("Rate", new Variant(rate));
-            String str = wordInfo.getWord();
+            String str = wordInfo.getWordname();
             // 执行朗读
             Dispatch.call(sapo, "Speak", new Variant(str));
 

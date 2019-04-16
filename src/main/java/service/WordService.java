@@ -14,7 +14,7 @@ public interface WordService {
 
   void delWordRoom(int id);
 
-  void updateWordRoom(WordRoomDto wordRoomDto);
+  void editWordRoom(WordRoomDto wordRoomDto);
 
   List<WordRoom> list();
 
@@ -24,7 +24,13 @@ public interface WordService {
 
   void delWord(int id);
 
-  void updateWord(WordInfo wordInfo);
-
   List<WordInfoDto> listWord();
+
+    void editWord(WordInfo wordInfo);
+
+  WordInfoDto getWordById(int id);
+
+  WordRoom getByWordRoomId(int id);
+
+    int wordRoomHaveWord(int id);
 }

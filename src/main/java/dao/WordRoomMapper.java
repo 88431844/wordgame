@@ -20,4 +20,6 @@ public interface WordRoomMapper {
   int haveWordRoom(@Param("wordRoomName") String wordRoomName);
 
     List<WordRoom> list();
+
+    int wordRoomHaveWord(@Param("id")int id);
 }

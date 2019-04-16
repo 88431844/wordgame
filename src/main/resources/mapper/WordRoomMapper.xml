@@ -69,4 +69,11 @@
     from wordroom
     where 1=1 order by id desc
   </select>
+
+  <select id="wordRoomHaveWord" resultType="java.lang.Integer">
+    select
+    count(1)
+    from word
+    where wordroomid = #{id}
+  </select>
 </mapper>

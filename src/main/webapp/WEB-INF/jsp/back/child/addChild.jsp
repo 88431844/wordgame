@@ -108,8 +108,6 @@
                                 </div>
                             </div>
 
-
-
                             <div class="clearfix form-actions">
                                 <div class="col-md-offset-3 col-md-9">
                                     <button class="btn btn-info" type="button" onclick="add()">

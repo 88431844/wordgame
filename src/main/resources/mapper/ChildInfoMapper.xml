@@ -61,6 +61,21 @@
     select
     <include refid="Base_Column_List" />
     from childinfo
-    where childname = #{childname,jdbcType=VARCHAR}
+    where childname = #{childName}
+  </select>
+
+
+  <select id="haveChild" resultType="java.lang.Integer">
+    select
+    count(1)
+    from childinfo
+    where childname = #{childname}
+  </select>
+
+  <select id="list" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from childinfo
+    where 1=1 order by id desc
   </select>
 </mapper>
