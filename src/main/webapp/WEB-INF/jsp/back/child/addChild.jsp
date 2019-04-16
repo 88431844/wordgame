@@ -9,7 +9,7 @@
     <base href="<%=basePath%>">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta charset="utf-8" />
-    <title>添加影院</title>
+    <title>添加儿童</title>
 
     <meta name="description" content="" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
@@ -56,7 +56,7 @@
     <![endif]-->
     <script>
         function add() {
-            var form = document.getElementById('cinema');
+            var form = document.getElementById('child');
             form.submit();
         }
     </script>
@@ -84,7 +84,7 @@
             <ul class="breadcrumb">
                 <li>
                     <i class="ace-icon fa fa-home home-icon"></i>
-                    <span>添加影院</span>
+                    <span>添加儿童</span>
                 </li>
             </ul><!-- /.breadcrumb -->
         </div>
@@ -97,30 +97,17 @@
                 <div class="row">
                     <div class="col-xs-12">
                         <!-- PAGE CONTENT BEGINS -->
-                        <form class="form-horizontal" role="form" action="cinema/addCinema"
-                               method="post" id="cinema">
+                        <form class="form-horizontal" role="form" action="child/add"
+                               method="post" id="child">
                             <!-- #section:elements.form -->
                             <div class="form-group">
-                                <label class="col-sm-3 control-label no-padding-right"> 影院名称 </label>
+                                <label class="col-sm-3 control-label no-padding-right"> 儿童名称 </label>
 
                                 <div class="col-sm-9">
-                                    <input type="text" name="name" placeholder="影院名称" class=""/>
+                                    <input type="text" name="childName" placeholder="儿童名称" class=""/>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label no-padding-right"> 影院电话 </label>
 
-                                <div class="col-sm-9">
-                                    <input type="text" name="phone" placeholder="影院电话" class=""/>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label no-padding-right"> 影院地址 </label>
-
-                                <div class="col-sm-9">
-                                    <input type="text" name="addr" placeholder=影院地址 class=""/>
-                                </div>
-                            </div>
 
 
                             <div class="clearfix form-actions">

@@ -103,7 +103,7 @@
                             out.print("<span>欢迎来到，识字游戏，请先登录！！</span>");
                         }
                     %>
-                        <form>
+                        <form action="login/childLogin">
                             <input type="text" name="childName" placeholder="宝宝名称">
                             <input type="submit"value="登录">
                         </form>
