@@ -127,8 +127,8 @@
                                 <thead>
                                 <tr>
 
-                                    <th width="20%">儿童名称</th>
-                                    <th width="25%">操作</th>
+                                    <th width="80%">儿童名称</th>
+                                    <th width="20%">操作</th>
                                 </tr>
                                 </thead>
 

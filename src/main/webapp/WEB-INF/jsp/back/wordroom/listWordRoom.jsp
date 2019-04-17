@@ -126,8 +126,8 @@
                             <table id="sample-table-2" class="table table-striped table-bordered table-hover">
                                 <thead>
                                 <tr>
-                                    <th width="20%">字库名称</th>
-                                    <th width="25%">操作</th>
+                                    <th width="80%">字库名称</th>
+                                    <th width="20%">操作</th>
                                 </tr>
                                 </thead>
                                 <tbody>

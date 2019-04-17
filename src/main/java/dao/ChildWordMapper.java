@@ -1,6 +1,9 @@
 package dao;
 
+import dto.ChildWordDto;
 import entity.ChildWord;
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
 
 public interface ChildWordMapper {
     int deleteByPrimaryKey(Integer id);
@@ -14,4 +17,6 @@ public interface ChildWordMapper {
     int updateByPrimaryKeySelective(ChildWord record);
 
     int updateByPrimaryKey(ChildWord record);
+
+    List<ChildWordDto> listChildWord(@Param("childId") Integer childId);
 }

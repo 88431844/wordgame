@@ -90,4 +90,22 @@
       errortimes = #{errortimes,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+
+
+  <select id="listChildWord" parameterType="java.lang.Integer" resultType="dto.ChildWordDto">
+    select
+    cw.id as id,
+    cw.wordid as wordId,
+    cw.childid as childId,
+    cw.righttimes as rightTimes,
+    cw.errortimes as errorTimes,
+    wr. id as wordRoomId,
+    wr.wordroomname as wordRoomName
+    from childword as cw,wordinfo as w,childinfo as c ,wordroom as wr
+    where cw.wordid = w.id and cw.childid = c.id and w.wordroomid = wr.id
+    <if test="childId != null">
+      and cw.childid = #{childId}
+    </if>
+  </select>
 </mapper>

@@ -1,5 +1,6 @@
 package service;
 
+import dto.ChildWordDto;
 import dto.WordInfoDto;
 import dto.WordRoomDto;
 import entity.WordInfo;
@@ -33,4 +34,6 @@ public interface WordService {
   WordRoom getByWordRoomId(int id);
 
     int wordRoomHaveWord(int id);
+
+  List<ChildWordDto> listChildWord(Integer childId);
 }

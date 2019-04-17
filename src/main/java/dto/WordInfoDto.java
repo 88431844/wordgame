@@ -12,7 +12,7 @@ public class WordInfoDto {
   private Integer wordroomid;
   private String wordRoomName;
 
-  private String wordname;
+  private String wordName;
 
   private String sound;
 
@@ -40,12 +40,12 @@ public class WordInfoDto {
     this.wordRoomName = wordRoomName;
   }
 
-  public String getWordname() {
-    return wordname;
+  public String getWordName() {
+    return wordName;
   }
 
-  public void setWordname(String wordname) {
-    this.wordname = wordname;
+  public void setWordName(String wordName) {
+    this.wordName = wordName;
   }
 
   public String getSound() {

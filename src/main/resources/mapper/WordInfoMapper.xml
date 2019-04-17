@@ -92,7 +92,7 @@
     select
     w.id as id,
     w.wordroomid as wordroomid,
-    w.wordname as wordname,
+    w.wordname as wordName,
     w.sound as sound,
     m.wordroomname as wordRoomName
     from wordinfo as w,wordroom as m
@@ -104,7 +104,7 @@
     select
     w.id as id,
     w.wordroomid as wordroomid,
-    w.wordname as wordname,
+    w.wordname as wordName,
     w.sound as sound,
     m.wordroomname as wordRoomName
     from wordinfo as w,wordroom as m

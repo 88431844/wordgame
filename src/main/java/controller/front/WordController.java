@@ -11,7 +11,10 @@ import com.iflytek.msp.cpdb.lfasr.model.ProgressStatus;
 import com.jacob.activeX.ActiveXComponent;
 import com.jacob.com.Dispatch;
 import com.jacob.com.Variant;
+import dto.ChildWordDto;
 import entity.WordInfo;
+import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,10 +29,15 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.UUID;
+import service.WordService;
 
 @Controller
 @RequestMapping("/word")
 public class WordController {
+
+    @Autowired
+    private WordService wordService;
+
    //tts setting start
     // 音量 0-100
     private static int volume = 100;
@@ -127,11 +135,10 @@ public class WordController {
     }
 
     @RequestMapping("/list")
-    public ModelAndView list() {
+    public ModelAndView list(Integer childId) {
         System.out.println("-----wordController list");
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("front/word/wordList");
-        return modelAndView;
+        return initChildWordList(modelAndView,childId);
     }
 
     private String audioToMessage(String local_file){
@@ -255,5 +262,11 @@ public class WordController {
         String wordStr = String.valueOf(wordList.get(0));
         JSONObject wordJson = JSONObject.parseObject(wordStr);
         return String.valueOf(wordJson.get("wordsName"));
+    }
+    public ModelAndView initChildWordList(ModelAndView modelAndView,Integer childId){
+        modelAndView.setViewName("front/word/wordList");
+        List<ChildWordDto> childWordDtoList = wordService.listChildWord(childId);
+        modelAndView.addObject("childWordDtoList",childWordDtoList);
+        return modelAndView;
     }
 }

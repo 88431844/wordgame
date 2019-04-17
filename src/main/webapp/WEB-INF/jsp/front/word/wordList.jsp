@@ -130,31 +130,33 @@
                                 <thead>
                                 <tr>
 
-                                    <th width="20%">影院名称</th>
-                                    <th width="15%">影院电话</th>
-                                    <th width="40%">影院地址</th>
-                                    <th width="25%">操作</th>
+                                    <th width="20%">汉字名称</th>
+                                    <th width="20%">所属字库</th>
+                                    <th width="20%">正确次数</th>
+                                    <th width="20%">错误次数</th>
+                                    <th width="20%">操作</th>
                                 </tr>
                                 </thead>
 
                                 <tbody>
 
-                                <c:forEach items="${cinemaList}" var="cinemaList">
+                                <c:forEach items="${childWordDtoList}" var="childWordDtoList">
                                     <tr>
 
-                                        <td><span>${cinemaList.name}</span></td>
-                                        <td><span>${cinemaList.phone}</span></td>
-                                        <td><span>${cinemaList.addr}</span></td>
+                                        <td><span>${childWordDtoList.wordName}</span></td>
+                                        <td><span>${childWordDtoList.wordRoomName}</span></td>
+                                        <td><span>${childWordDtoList.rightTimes}</span></td>
+                                        <td><span>${childWordDtoList.errorTimes}</span></td>
                                         <td>
                                             <div class="">
-                                                <button class="green" onclick="toEdit(${cinemaList.id})">
+                                                <button class="green" onclick="toEdit(${childWordDtoList.id})">
                                                     <i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
-                                                    编辑影院
+                                                    汉字发音
                                                 </button>
 
                                                 <button class="red" onclick="del(${cinemaList.id})">
                                                     <i class="ace-icon fa fa-trash-o bigger-120"></i>
-                                                    删除影院
+                                                    训练
                                                 </button>
                                             </div>
                                         </td>
@@ -215,7 +217,7 @@
                     bAutoWidth: true,
                     "aoColumns": [
                         {"bSortable": false},
-                        null, null,
+                        null, null,null,
                         {"bSortable": false}
                     ],
                     "aaSorting": [],

@@ -15,6 +15,8 @@ public class LoginController {
 
   @Autowired
   private ChildInfoMapper childInfoMapper;
+  @Autowired
+  private WordController wordController;
 
   @RequestMapping("/childLogin")
   public ModelAndView childLogin(String childName, HttpSession session) {
@@ -27,8 +29,7 @@ public class LoginController {
     } else {
       modelAndView.addObject("message", "登录失败，请检查儿童名称是否存在");
     }
-    modelAndView.setViewName("front/word/wordList");
-    return modelAndView;
+    return wordController.initChildWordList(modelAndView,childInfo.getId());
   }
 
   @RequestMapping("/childLogout")
