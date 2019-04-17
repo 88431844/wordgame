@@ -106,7 +106,7 @@
                                 <label class="col-sm-3 control-label no-padding-right"> 字库名称 </label>
 
                                 <div class="col-sm-9">
-                                    <select name="movieid">
+                                    <select name="wordroomid">
                                         <option value="0">请选择</option>
                                         <c:forEach items="${wordRoomList}" var="wordRoomList">
                                             <option value="${wordRoomList.id}">${wordRoomList.wordroomname}</option>
@@ -119,7 +119,7 @@
                                 <label class="col-sm-3 control-label no-padding-right"> 汉字名称 </label>
 
                                 <div class="col-sm-9">
-                                    <input type="text" name="childName" placeholder="汉字名称" class=""/>
+                                    <input type="text" name="wordname" placeholder="汉字名称" class=""/>
                                 </div>
                             </div>
 

@@ -73,7 +73,7 @@
   <select id="wordRoomHaveWord" resultType="java.lang.Integer">
     select
     count(1)
-    from word
+    from wordinfo
     where wordroomid = #{id}
   </select>
 </mapper>

@@ -60,8 +60,10 @@ public class BackWordController {
         ModelAndView modelAndView = new ModelAndView();
         WordInfoDto wordInfoDto = wordService.getWordById(id);
         modelAndView.addObject("wordInfoDto",wordInfoDto);
+        List<WordRoom> wordRoomList = wordService.list();
+        modelAndView.addObject("wordRoomList",wordRoomList);
         modelAndView.setViewName("back/word/editWord");
-        return listWord(modelAndView);
+        return modelAndView;
     }
 
     @RequestMapping("/edit")

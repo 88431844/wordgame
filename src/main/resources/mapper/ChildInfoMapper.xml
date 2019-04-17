@@ -69,7 +69,7 @@
     select
     count(1)
     from childinfo
-    where childname = #{childname}
+    where childname = #{childName}
   </select>
 
   <select id="list" resultMap="BaseResultMap">

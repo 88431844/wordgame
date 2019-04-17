@@ -97,23 +97,19 @@
                     <%
                         String childName = (String)session.getAttribute("childName");
                         if (!StringUtils.isEmpty(childName)){
-                            out.print("<span>欢迎 : "+childName+"来到，识字游戏</span>");
+                            out.println("<span>欢迎 : "+childName+"来到，识字游戏</span>");
+                            out.print("<br>");
+                            out.println("<a href=\"login/childLogout\">\n"
+                                    + "                        <i class=\"ace-icon fa fa-power-off\"></i>\n"
+                                    + "                        登出\n"
+                                    + "                    </a>");
                         }
                         else {
-                            out.print("<span>欢迎来到，识字游戏，请先登录！！</span>");
+                            out.println("<span>欢迎来到，识字游戏，请先登录！！</span>");
+                            out.println("<form action='login/childLogin'method='post'><input type='text'name='childName'placeholder='儿童名称'><input type='submit'value='登录'></form>");
                         }
+                        out.println("<button onclick=\"toSetting()\">系统设置</button>");
                     %>
-                        <form action="login/childLogin" method="post">
-                            <input type="text" name="childName" placeholder="宝宝名称">
-                            <input type="submit"value="登录">
-                        </form>
-                    <br>
-                </li>
-                <li>
-
-                </li>
-                <li>
-                    <button onclick="toSetting()">系统设置</button>
                 </li>
             </ul><!-- /.breadcrumb -->
         </div>

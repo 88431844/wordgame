@@ -13,10 +13,10 @@
         <!-- /section:basics/sidebar.mobile.toggle -->
         <div class="navbar-header pull-left">
             <!-- #section:basics/navbar.layout.brand -->
-            <a href="backMovie/listMovie" class="navbar-brand">
+            <a class="navbar-brand">
                 <small>
                     <i class="fa fa-leaf"></i>
-                    后台管理
+                    系统设置
                 </small>
             </a>
 

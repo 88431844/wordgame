@@ -4,6 +4,7 @@
     String path = request.getContextPath();
     String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
 %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="zh">
 <head>
@@ -109,22 +110,26 @@
                 <div class="row">
                     <div class="col-xs-12">
                         <!-- PAGE CONTENT BEGINS -->
-                        <form class="form-horizontal" role="form" action="word/edit"
+                        <form class="form-horizontal" role="form" action="backWord/edit"
                               method="post" id="word">
                             <!-- #section:elements.form -->
                             <div class="form-group">
                                 <label class="col-sm-3 control-label no-padding-right"> 字库名称 </label>
 
                                 <div class="col-sm-9">
-                                    <input type="text" value="${wordInfoDto.wordRoomName}" readonly="readonly"
-                                           class="col-xs-10 col-sm-5"/>
+                                    <select name="wordroomid">
+                                        <option value="${wordInfoDto.wordroomid}">*${wordInfoDto.wordRoomName}</option>
+                                        <c:forEach items="${wordRoomList}" var="wordRoomList">
+                                            <option value="${wordRoomList.id}">${wordRoomList.wordroomname}</option>
+                                        </c:forEach>
+                                    </select>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-3 control-label no-padding-right"> 汉字名称 </label>
 
                                 <div class="col-sm-9">
-                                    <input type="text" name="phone" value="${wordInfoDto.wordname}"
+                                    <input type="text" name="wordname" value="${wordInfoDto.wordname}"
                                            class="col-xs-10 col-sm-5"/>
                                 </div>
                             </div>

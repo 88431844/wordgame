@@ -116,7 +116,7 @@
                                 <label class="col-sm-3 control-label no-padding-right"> 字库名称 </label>
 
                                 <div class="col-sm-9">
-                                    <input type="text" name="name" value="${wordRoom.wordroomname}" placeholder="字库名称"
+                                    <input type="text" name="wordRoomName" value="${wordRoom.wordroomname}" placeholder="字库名称"
                                            class="col-xs-10 col-sm-5"/>
                                 </div>
                             </div>
