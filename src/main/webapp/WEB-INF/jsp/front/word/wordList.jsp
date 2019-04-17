@@ -62,6 +62,10 @@
             }
 
         }
+        function toVoice(wordName,childId){
+          // alert("111");
+          window.location.href = "word/tts?wordName=" + wordName + "&childId="+childId;
+        }
 
     </script>
 </head>
@@ -149,12 +153,12 @@
                                         <td><span>${childWordDtoList.errorTimes}</span></td>
                                         <td>
                                             <div class="">
-                                                <button class="green" onclick="toEdit(${childWordDtoList.id})">
+                                                <button class="green" onclick="toVoice('${childWordDtoList.wordName}','${sessionScope.get("childId")}')">
                                                     <i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
                                                     汉字发音
                                                 </button>
 
-                                                <button class="red" onclick="del(${cinemaList.id})">
+                                                <button class="red" onclick="del(${childWordDtoList.id})">
                                                     <i class="ace-icon fa fa-trash-o bigger-120"></i>
                                                     训练
                                                 </button>

@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
@@ -52,8 +53,8 @@ public class WordController {
     //asr setting end
 
     @RequestMapping("/tts")
-    public ModelAndView tts(@ModelAttribute WordInfo wordInfo) {
-
+    public ModelAndView tts(@RequestParam("wordName") String wordName,@RequestParam("childId") Integer childId) {
+      System.out.println(System.getProperty("java.library.path"));
         System.out.println("-----wordController tts");
         ActiveXComponent sap = new ActiveXComponent("Sapi.SpVoice");
 
@@ -63,9 +64,8 @@ public class WordController {
             sap.setProperty("Volume", new Variant(volume));
             // 语音朗读速度 -10 到 +10
             sap.setProperty("Rate", new Variant(rate));
-            String str = wordInfo.getWordname();
             // 执行朗读
-            Dispatch.call(sapo, "Speak", new Variant(str));
+            Dispatch.call(sapo, "Speak", new Variant(wordName));
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -74,8 +74,7 @@ public class WordController {
             sap.safeRelease();
         }
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("front/word/wordList");
-        return modelAndView;
+        return initChildWordList(modelAndView,childId);
     }
 
     @RequestMapping("/asr")
