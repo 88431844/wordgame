@@ -129,7 +129,7 @@
                                 <label class="col-sm-3 control-label no-padding-right"> 汉字名称 </label>
 
                                 <div class="col-sm-9">
-                                    <input type="text" name="wordname" value="${wordInfoDto.wordname}"
+                                    <input type="text" name="wordname" value="${wordInfoDto.wordName}"
                                            class="col-xs-10 col-sm-5"/>
                                 </div>
                             </div>
@@ -149,7 +149,7 @@
                             </div>
 
                             <input type="hidden" name="id" value="${wordInfoDto.id}">
-                            <input type="hidden" name="oldName" value="${wordInfoDto.wordname}">
+                            <input type="hidden" name="oldName" value="${wordInfoDto.wordName}">
                         </form>
 
                     </div><!-- /.col -->

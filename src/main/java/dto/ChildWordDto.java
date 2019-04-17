@@ -1,10 +1,6 @@
-// Copyright 2018 Mobvoi Inc. All Rights Reserved.
 
 package dto;
 
-/**
- * created by zhhgao@mobvoi.com on 2019-04-17
- */
 public class ChildWordDto {
 
   private int id;

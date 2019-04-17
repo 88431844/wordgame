@@ -138,7 +138,7 @@
                                 <c:forEach items="${wordInfoDtoList}" var="wordInfoDtoList">
                                     <tr>
 
-                                        <td><span>${wordInfoDtoList.wordname}</span></td>
+                                        <td><span>${wordInfoDtoList.wordName}</span></td>
                                         <td><span>${wordInfoDtoList.wordRoomName}</span></td>
                                         <td>
                                             <div class="">

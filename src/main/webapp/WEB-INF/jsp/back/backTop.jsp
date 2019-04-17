@@ -32,7 +32,7 @@
             <ul class="nav ace-nav">
                 <!-- #section:basics/navbar.user_menu -->
                 <li class="light-blue">
-                    <a data-toggle="dropdown" href="admin/adminLogin" class="dropdown-toggle">
+                    <a data-toggle="dropdown" class="dropdown-toggle">
                         <img class="nav-user-photo" src="static/assets/avatars/user.jpg" alt="Jason's Photo"/>
                         <span class="user-info">
 									<small>欢迎</small>
