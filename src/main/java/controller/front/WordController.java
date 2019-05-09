@@ -84,59 +84,61 @@ public class WordController {
         modelAndView.setViewName("front/word/wordList");
 
 
-        String path = "";
-        //将当前上下文初始化给  CommonsMutipartResolver （多部分解析器）
-        CommonsMultipartResolver multipartResolver=new CommonsMultipartResolver(
-                request.getSession().getServletContext());
-        //检查form中是否有enctype="multipart/form-data"
-        if(multipartResolver.isMultipart(request))
-        {
-            //将request变成多部分request
-            MultipartHttpServletRequest multiRequest=(MultipartHttpServletRequest)request;
-            //获取multiRequest 中所有的文件名
-            Iterator iter=multiRequest.getFileNames();
-
-            while(iter.hasNext())
-            {
-                //一次遍历所有文件
-                MultipartFile file=multiRequest.getFile(iter.next().toString());
-                if(file!=null)
-                {
-                    String localTempDir = "D:\\\\code\\\\wordgame\\\\target\\\\wordgame-1.0-SNAPSHOT\\\\uploadFile\\\\";
-                    String fileName = UUID.randomUUID() + ".wav";
-                    path = localTempDir + fileName;
-                    File tempFile = null;
-                    try {
-                        tempFile = new File(localTempDir + fileName);
-                        if (!tempFile.getParentFile().exists()) {
-                            tempFile.getParentFile().mkdirs();
-                        }
-                        if (!tempFile.exists()) {
-                            tempFile.createNewFile();
-                        }
-
-                        file.transferTo(tempFile);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        }
-
-        String message = processASRJson(audioToMessage(path));
-        System.out.println("----- message : " + message);
-        String requestMessage = message;
-        String sessionMessage = message;
-        modelAndView.addObject("message",message);
-        request.setAttribute("requestMessage",requestMessage);
-        session.setAttribute("sessionMessage",sessionMessage);
+//        String path = "";
+//        //将当前上下文初始化给  CommonsMutipartResolver （多部分解析器）
+//        CommonsMultipartResolver multipartResolver=new CommonsMultipartResolver(
+//                request.getSession().getServletContext());
+//        //检查form中是否有enctype="multipart/form-data"
+//        if(multipartResolver.isMultipart(request))
+//        {
+//            //将request变成多部分request
+//            MultipartHttpServletRequest multiRequest=(MultipartHttpServletRequest)request;
+//            //获取multiRequest 中所有的文件名
+//            Iterator iter=multiRequest.getFileNames();
+//
+//            while(iter.hasNext())
+//            {
+//                //一次遍历所有文件
+//                MultipartFile file=multiRequest.getFile(iter.next().toString());
+//                if(file!=null)
+//                {
+//                    String localTempDir = "D:\\\\code\\\\wordgame\\\\target\\\\wordgame-1.0-SNAPSHOT\\\\uploadFile\\\\";
+//                    String fileName = UUID.randomUUID() + ".wav";
+//                    path = localTempDir + fileName;
+//                    File tempFile = null;
+//                    try {
+//                        tempFile = new File(localTempDir + fileName);
+//                        if (!tempFile.getParentFile().exists()) {
+//                            tempFile.getParentFile().mkdirs();
+//                        }
+//                        if (!tempFile.exists()) {
+//                            tempFile.createNewFile();
+//                        }
+//
+//                        file.transferTo(tempFile);
+//                    } catch (Exception e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//            }
+//        }
+//
+//        String message = processASRJson(audioToMessage(path));
+//        System.out.println("----- message : " + message);
+//        String requestMessage = message;
+//        String sessionMessage = message;
+//        modelAndView.addObject("message",message);
+        request.setAttribute("message","test!");
+//        session.setAttribute("sessionMessage",sessionMessage);
+//        modelAndView.addObject("message","test!");
         return modelAndView;
     }
 
     @RequestMapping("/list")
-    public ModelAndView list(Integer childId) {
+    public ModelAndView list(Integer childId,String message) {
         System.out.println("-----wordController list");
         ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("message",message);
         return initChildWordList(modelAndView,childId);
     }
 

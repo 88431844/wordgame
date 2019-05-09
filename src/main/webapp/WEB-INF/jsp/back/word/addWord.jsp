@@ -119,7 +119,7 @@
                                 <label class="col-sm-3 control-label no-padding-right"> 汉字名称 </label>
 
                                 <div class="col-sm-9">
-                                    <input type="text" name="wordName" placeholder="汉字名称" class=""/>
+                                    <input type="text" name="wordname" placeholder="汉字名称" class=""/>
                                 </div>
                             </div>
 

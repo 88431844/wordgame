@@ -6,7 +6,7 @@
     String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
 %>
 <!DOCTYPE html>
-<html lang="zh" >
+<html lang="zh" style="background-image: image('static/img/background.jpg')">
 <head>
     <base href="<%=basePath%>">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
@@ -71,9 +71,29 @@
             }
 
         }
+        function uploadAudio() {
+            recorder.upload("word/asr", function (state, e) {
+                switch (state) {
+                    case 'uploading':
+                        var percentComplete = Math.round(e.loaded * 100 / e.total) + '%';
+                        break;
+                    case 'ok':
+                        // alert(e.target.responseText);
+                    <%--alert("message : " + <%String message = (String)session.getAttribute("sessionMessage"); out.print(message);%>);--%>
+                        window.location.href="word/toMessage";
+                        break;
+                    case 'error':
+                        alert("上传失败");
+                        break;
+                    case 'cancel':
+                        alert("上传被取消");
+                        break;
+                }
+            });
+        }
 
     </script>
-
+    <script type="text/javascript" src="static/js/HZRecorder.js"></script>
 </head>
 
 <body  onload="myAlert()" >
@@ -140,19 +160,20 @@
                                 <thead>
                                 <tr>
 
-                                    <th width="50%">汉字名称</th>
-                                    <th width="10%">所属字库</th>
-                                    <th width="10%">正确次数</th>
-                                    <th width="10%">错误次数</th>
+                                    <th width="20%">汉字名称</th>
+                                    <th width="20%">所属字库</th>
+                                    <th width="20%">正确次数</th>
+                                    <th width="20%">错误次数</th>
                                     <th width="20%">操作</th>
                                 </tr>
+                                </thead>
 
                                 <tbody>
 
                                 <c:forEach items="${childWordDtoList}" var="childWordDtoList">
                                     <tr>
 
-                                        <td><span style="font-size: 50px;"><center>${childWordDtoList.wordName}<center></span></td>
+                                        <td><span style="font-size: 50px">${childWordDtoList.wordName}</span></td>
                                         <td><span style="font-size: 20px">${childWordDtoList.wordRoomName}</span></td>
                                         <td><span>${childWordDtoList.rightTimes}</span></td>
                                         <td><span>${childWordDtoList.errorTimes}</span></td>
@@ -163,57 +184,11 @@
                                                     汉字发音
                                                 </button>
 
-                                                <%--<button class="red" onclick="del(${childWordDtoList.id})">--%>
-                                                    <%--<i class="ace-icon fa fa-trash-o bigger-120"></i>--%>
-                                                    <%--训练--%>
-                                                <%--</button>--%>
-                                                <div>
-                                                            <audio controls autoplay ></audio>
-                                                            <input onclick="startRecording()" type="button" value="录音" />
-                                                            <input onclick="stopRecording()" type="button" value="停止" />
-                                                            <input onclick="playRecording()" type="button" value="播放" />
-                                                            <input onclick="uploadAudio()" type="button" value="提交" />
-                                                        </div>
-
-                                                    <script type="text/javascript" src="static/js/HZRecorder.js"></script>
-
-                                                    <script>
-                                                var recorder;
-                                                var audio = document.querySelector('audio');
-                                                function startRecording() {
-                                                    HZRecorder.get(function (rec) {
-                                                        recorder = rec;
-                                                        recorder.start();
-                                                    });
-                                                }
-                                                function stopRecording() {
-                                                    recorder.stop();
-                                                }
-                                                function playRecording() {
-                                                    recorder.play(audio);
-                                                }
-                                                function uploadAudio() {
-                                                    recorder.upload("word/asr", function (state, e) {
-                                                        switch (state) {
-                                                            case 'uploading':
-                                                                //var percentComplete = Math.round(e.loaded * 100 / e.total) + '%';
-                                                                break;
-                                                            case 'ok':
-                                                                //alert(e.target.responseText);
-                                                                // alert("上传成功");
-                                                                // window.location.href="word/list";
-                                                                break;
-                                                            case 'error':
-                                                                alert("上传失败");
-                                                                break;
-                                                            case 'cancel':
-                                                                alert("上传被取消");
-                                                                break;
-                                                        }
-                                                    });
-                                                }
-
-                                            </script>
+                                                <button class="red" onclick="del(${childWordDtoList.id})">
+                                                    <i class="ace-icon fa fa-trash-o bigger-120"></i>
+                                                    训练
+                                                </button>
+                                            </div>
                                         </td>
                                     </tr>
                                 </c:forEach>
