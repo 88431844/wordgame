@@ -128,9 +128,10 @@ public class WordController {
 //        String requestMessage = message;
 //        String sessionMessage = message;
 //        modelAndView.addObject("message",message);
-        request.setAttribute("message","test!");
-//        session.setAttribute("sessionMessage",sessionMessage);
+//        request.setAttribute("asr","asr_test!");
+        session.setAttribute("asr_session","恭喜你，回答正确！");
 //        modelAndView.addObject("message","test!");
+      System.out.println("----- asr session set done !!!");
         return modelAndView;
     }
 
@@ -269,5 +270,11 @@ public class WordController {
         List<ChildWordDto> childWordDtoList = wordService.listChildWord(childId);
         modelAndView.addObject("childWordDtoList",childWordDtoList);
         return modelAndView;
+    }
+    @RequestMapping("/removeSession")
+  public ModelAndView removeSession(HttpSession session){
+      ModelAndView modelAndView = new ModelAndView();
+      session.setAttribute("asr_session","");
+      return initChildWordList(modelAndView,null);
     }
 }
