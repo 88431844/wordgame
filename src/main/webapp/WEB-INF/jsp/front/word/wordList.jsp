@@ -200,7 +200,7 @@
                                                                 break;
                                                             case 'ok':
                                                                 //alert(e.target.responseText);
-                                                                // alert("上传成功");
+                                                                alert("上传成功");
                                                                 // window.location.href="word/list";
                                                                 break;
                                                             case 'error':

@@ -29,7 +29,8 @@ public class LoginController {
     } else {
       modelAndView.addObject("message", "登录失败，请检查儿童名称是否存在");
     }
-    return wordController.initChildWordList(modelAndView,childInfo.getId());
+    Integer userId = childInfo==null ?null : childInfo.getId();
+    return wordController.initChildWordList(modelAndView,userId);
   }
 
   @RequestMapping("/childLogout")
