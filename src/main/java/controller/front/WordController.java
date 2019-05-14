@@ -16,7 +16,6 @@ import entity.WordInfo;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -77,6 +76,12 @@ public class WordController {
         return initChildWordList(modelAndView,childId);
     }
 
+    /**
+     * 1.根据传入的wordid查询对应word名称
+     * 2.根据上传的音频文件，通过讯飞识别出对应音频文字
+     * 3.比较讯飞识别文字和查询出来的word名称是否一致
+     * 4.如果一致则该儿童对该汉字正确次数加一，否则错误次数加一，并返回前端正确，错误结果
+     */
     @RequestMapping("/asr")
     public ModelAndView asr(HttpServletRequest request, HttpSession session,
         @RequestParam("wordid") int wordid,@RequestParam("wordname") String wordname) {
@@ -87,63 +92,61 @@ public class WordController {
         Integer childId = (int)session.getAttribute("childId");
 
 
-//        String path = "";
-//        //将当前上下文初始化给  CommonsMutipartResolver （多部分解析器）
-//        CommonsMultipartResolver multipartResolver=new CommonsMultipartResolver(
-//                request.getSession().getServletContext());
-//        //检查form中是否有enctype="multipart/form-data"
-//        if(multipartResolver.isMultipart(request))
-//        {
-//            //将request变成多部分request
-//            MultipartHttpServletRequest multiRequest=(MultipartHttpServletRequest)request;
-//            //获取multiRequest 中所有的文件名
-//            Iterator iter=multiRequest.getFileNames();
-//
-//            while(iter.hasNext())
-//            {
-//                //一次遍历所有文件
-//                MultipartFile file=multiRequest.getFile(iter.next().toString());
-//                if(file!=null)
-//                {
-//                    String localTempDir = "D:\\\\code\\\\wordgame\\\\target\\\\wordgame-1.0-SNAPSHOT\\\\uploadFile\\\\";
-//                    String fileName = UUID.randomUUID() + ".wav";
-//                    path = localTempDir + fileName;
-//                    File tempFile = null;
-//                    try {
-//                        tempFile = new File(localTempDir + fileName);
-//                        if (!tempFile.getParentFile().exists()) {
-//                            tempFile.getParentFile().mkdirs();
-//                        }
-//                        if (!tempFile.exists()) {
-//                            tempFile.createNewFile();
-//                        }
-//
-//                        file.transferTo(tempFile);
-//                    } catch (Exception e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-//            }
-//        }
-//
-//        String message = processASRJson(audioToMessage(path));
-//        System.out.println("----- message : " + message);
-//        String requestMessage = message;
-//        String sessionMessage = message;
-//        modelAndView.addObject("message",message);
-//        request.setAttribute("asr","asr_test!");
-        session.setAttribute("asr_session","恭喜你，回答正确！");
-//        modelAndView.addObject("message","test!");
-      System.out.println("wordid : " + wordid);
-      System.out.println("childId : " + childId);
-      System.out.println("wordname : " + wordname);
-      System.out.println("----- asr session set done !!!");
-      /**
-       * 1.根据传入的wordid查询对应word名称
-       * 2.根据上传的音频文件，通过讯飞识别出对应音频文字
-       * 3.比较讯飞识别文字和查询出来的word名称是否一致
-       * 4.如果一致则该儿童对该汉字正确次数加一，否则错误次数加一，并返回前端正确，错误结果
-       */
+        String path = "";
+        //将当前上下文初始化给  CommonsMutipartResolver （多部分解析器）
+        CommonsMultipartResolver multipartResolver=new CommonsMultipartResolver(
+                request.getSession().getServletContext());
+        //检查form中是否有enctype="multipart/form-data"
+        if(multipartResolver.isMultipart(request))
+        {
+            //将request变成多部分request
+            MultipartHttpServletRequest multiRequest=(MultipartHttpServletRequest)request;
+            //获取multiRequest 中所有的文件名
+            Iterator iter=multiRequest.getFileNames();
+
+            while(iter.hasNext())
+            {
+                //一次遍历所有文件
+                MultipartFile file=multiRequest.getFile(iter.next().toString());
+                if(file!=null)
+                {
+                    String localTempDir = "D:\\\\code\\\\wordgame\\\\target\\\\wordgame-1.0-SNAPSHOT\\\\uploadFile\\\\";
+                    String fileName = UUID.randomUUID() + ".wav";
+                    path = localTempDir + fileName;
+                    File tempFile = null;
+                    try {
+                        tempFile = new File(localTempDir + fileName);
+                        if (!tempFile.getParentFile().exists()) {
+                            tempFile.getParentFile().mkdirs();
+                        }
+                        if (!tempFile.exists()) {
+                            tempFile.createNewFile();
+                        }
+
+                        file.transferTo(tempFile);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+
+        String asrBackMessage = processASRJson(audioToMessage(path));
+        System.out.println("asr asrBackMessage : " + asrBackMessage);
+        System.out.println("asr wordname : " + wordname);
+        if (asrBackMessage.equals(wordname)){
+            wordService.updateChildTrain(childId,wordid,true);
+            session.setAttribute("asr_session","恭喜你，回答正确！");
+        }else {
+            wordService.updateChildTrain(childId,wordid,false);
+            session.setAttribute("asr_session","回答错误，加油加油！");
+        }
+
+//      System.out.println("wordid : " + wordid);
+//      System.out.println("childId : " + childId);
+//      System.out.println("wordname : " + wordname);
+//      System.out.println("----- asr session set done !!!");
+
         return modelAndView;
     }
 

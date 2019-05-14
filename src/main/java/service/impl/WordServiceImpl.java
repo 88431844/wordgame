@@ -6,6 +6,7 @@ import dao.WordRoomMapper;
 import dto.ChildWordDto;
 import dto.WordInfoDto;
 import dto.WordRoomDto;
+import entity.ChildWord;
 import entity.WordInfo;
 import entity.WordRoom;
 import java.util.ArrayList;
@@ -116,6 +117,34 @@ public class WordServiceImpl implements WordService {
       }
     }
     return ret;
+  }
+
+  @Override
+  public void updateChildTrain(int childId, int wordid, boolean b) {
+    ChildWord childWord = childWordMapper.selectByChildIdWordId(childId,wordid);
+    int rightTimes = 0;
+    int errorTimes = 0;
+    if (b){
+      rightTimes = 1;
+    }else {
+      errorTimes = 1;
+    }
+    //说明没有儿童训练记录，进行新增记录操作
+    if (null == childWord){
+      ChildWord c = new ChildWord();
+      c.setChildid(childId);
+      c.setWordid(wordid);
+      c.setRighttimes(rightTimes);
+      c.setErrortimes(errorTimes);
+      childWordMapper.insertSelective(c);
+    }else {
+      //说明已经有儿童训练记录，则进行更新操作
+      int newRightTimes = childWord.getRighttimes() == null ? 0 : childWord.getRighttimes() + rightTimes;
+      int newErrorTimes = childWord.getErrortimes() == null ? 0 : childWord.getErrortimes() + errorTimes;
+      childWord.setRighttimes(newRightTimes);
+      childWord.setErrortimes(newErrorTimes);
+      childWordMapper.updateByPrimaryKeySelective(childWord);
+    }
   }
 
   @Override

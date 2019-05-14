@@ -36,4 +36,6 @@ public interface WordService {
     int wordRoomHaveWord(int id);
 
   List<ChildWordDto> listChildWord(Integer childId);
+
+    void updateChildTrain(int childId, int wordid, boolean b);
 }

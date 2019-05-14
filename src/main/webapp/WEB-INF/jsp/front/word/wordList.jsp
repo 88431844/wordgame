@@ -59,7 +59,7 @@
           var asr_session =  '<%=session.getAttribute("asr_session")%>' ;
           var new_asr_session = asr_session;
           if (null != new_asr_session && !"".endsWith(new_asr_session)&& !"null".endsWith(new_asr_session)) {
-            alert("new_asr_session : "+new_asr_session);
+            alert(""+new_asr_session);
             window.location.href = "word/removeSession";
           }
 

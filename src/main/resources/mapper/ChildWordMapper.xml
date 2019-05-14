@@ -109,4 +109,11 @@
     </if>
     order by cw.errortimes asc
   </select>
+
+  <select id="selectByChildIdWordId"  resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from childword
+    where  wordid = #{wordid} and childid = #{childId}
+  </select>
 </mapper>

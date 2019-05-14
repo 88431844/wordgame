@@ -19,4 +19,6 @@ public interface ChildWordMapper {
     int updateByPrimaryKey(ChildWord record);
 
     List<ChildWordDto> listChildWord(@Param("childId") Integer childId);
+
+    ChildWord selectByChildIdWordId(@Param("childId")int childId,@Param("wordid") int wordid);
 }

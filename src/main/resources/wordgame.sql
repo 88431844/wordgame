@@ -32,7 +32,7 @@ CREATE TABLE `childinfo` (
 -- ----------------------------
 DROP TABLE IF EXISTS `childword`;
 CREATE TABLE `childword` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `wordid` int(11) DEFAULT NULL COMMENT '汉字id',
   `childid` int(11) DEFAULT NULL COMMENT '孩子id',
   `righttimes` int(11) DEFAULT NULL COMMENT '正确次数',
