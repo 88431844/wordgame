@@ -204,7 +204,14 @@
                                                     recorder.play(audio);
                                                 }
                                                 function uploadAudio() {
-                                                    recorder.upload("word/asr", function (state, e) {
+                                                  var childId = "${sessionScope.childId}";
+                                                  if ("".endsWith(childId)) {
+                                                    alert("请先登录！");
+                                                    return;
+                                                  }
+                                                  var wordid = '${childWordDtoList.wordId}';
+                                                  var wordname = '${childWordDtoList.wordName}';
+                                                    recorder.upload("word/asr?wordid="+wordid+"&wordname="+wordname, function (state, e) {
                                                         switch (state) {
                                                             case 'ok':
                                                                 window.location.href="word/list";

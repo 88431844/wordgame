@@ -107,5 +107,6 @@
     <if test="childId != null">
       and cw.childid = #{childId}
     </if>
+    order by cw.errortimes asc
   </select>
 </mapper>

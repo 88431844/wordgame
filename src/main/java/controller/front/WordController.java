@@ -78,10 +78,13 @@ public class WordController {
     }
 
     @RequestMapping("/asr")
-    public ModelAndView asr(HttpServletRequest request, HttpSession session) {
+    public ModelAndView asr(HttpServletRequest request, HttpSession session,
+        @RequestParam("wordid") int wordid,@RequestParam("wordname") String wordname) {
+
         System.out.println("-----wordController asr");
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("front/word/wordList");
+        Integer childId = (int)session.getAttribute("childId");
 
 
 //        String path = "";
@@ -131,7 +134,16 @@ public class WordController {
 //        request.setAttribute("asr","asr_test!");
         session.setAttribute("asr_session","恭喜你，回答正确！");
 //        modelAndView.addObject("message","test!");
+      System.out.println("wordid : " + wordid);
+      System.out.println("childId : " + childId);
+      System.out.println("wordname : " + wordname);
       System.out.println("----- asr session set done !!!");
+      /**
+       * 1.根据传入的wordid查询对应word名称
+       * 2.根据上传的音频文件，通过讯飞识别出对应音频文字
+       * 3.比较讯飞识别文字和查询出来的word名称是否一致
+       * 4.如果一致则该儿童对该汉字正确次数加一，否则错误次数加一，并返回前端正确，错误结果
+       */
         return modelAndView;
     }
 
