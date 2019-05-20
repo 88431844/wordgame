@@ -9,10 +9,10 @@ import dto.WordRoomDto;
 import entity.ChildWord;
 import entity.WordInfo;
 import entity.WordRoom;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+
+import java.util.*;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import service.WordService;
@@ -97,7 +97,7 @@ public class WordServiceImpl implements WordService {
     List<ChildWordDto> ret = new ArrayList<>();
     List<WordInfoDto> wordInfoDtoList = wordInfoMapper.listWord();
     //查询登陆儿童汉字信息
-    List<ChildWordDto> childWordDtoList = childWordMapper.listChildWord(childId);
+    List<ChildWordDto> childWordDtoList = null == childId ? new ArrayList<>() : childWordMapper.listChildWord(childId);
     //如果没有登陆，或则儿童没有训练汉字，则加载全部汉字信息
     if (childWordDtoList.size() == 0){
       for (WordInfoDto wordInfoDto : wordInfoDtoList){
@@ -111,10 +111,12 @@ public class WordServiceImpl implements WordService {
         childTrainedWordIdMap.put(childWordDto.getWordId(),"1");
       }
       for (WordInfoDto wordInfoDto : wordInfoDtoList){
-        if (null != childTrainedWordIdMap.get(wordInfoDto.getId())){
+        boolean haveChildWord = null != childTrainedWordIdMap.get(wordInfoDto.getId());
+        if (!haveChildWord){
           childWordDtoList.add(convert(wordInfoDto));
         }
       }
+      ret = childWordDtoList.stream().sorted(Comparator.comparing(ChildWordDto::getErrorTimes).reversed()).collect(Collectors.toList());
     }
     return ret;
   }

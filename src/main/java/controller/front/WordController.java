@@ -131,7 +131,9 @@ public class WordController {
             }
         }
 
-        String asrBackMessage = processASRJson(audioToMessage(path));
+//        String asrBackMessage = processASRJson(audioToMessage(path));
+        String asrBackMessage = "老虎";
+
         System.out.println("asr asrBackMessage : " + asrBackMessage);
         System.out.println("asr wordname : " + wordname);
         if (asrBackMessage.equals(wordname)){
@@ -147,15 +149,19 @@ public class WordController {
 //      System.out.println("wordname : " + wordname);
 //      System.out.println("----- asr session set done !!!");
 
-        return modelAndView;
+        return initChildWordList(modelAndView,childId);
     }
 
     @RequestMapping("/list")
-    public ModelAndView list(Integer childId,String message) {
+    public ModelAndView list(String message,HttpSession session) {
         System.out.println("-----wordController list");
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("message",message);
-        return initChildWordList(modelAndView,childId);
+        Integer childId = null;
+        if (null != session.getAttribute("childId")){
+            childId = (int)session.getAttribute("childId");
+        }
+         return initChildWordList(modelAndView,childId);
     }
 
     private String audioToMessage(String local_file){
@@ -290,6 +296,7 @@ public class WordController {
   public ModelAndView removeSession(HttpSession session){
       ModelAndView modelAndView = new ModelAndView();
       session.setAttribute("asr_session","");
-      return initChildWordList(modelAndView,null);
+        Integer childId = (int)session.getAttribute("childId");
+      return initChildWordList(modelAndView,childId);
     }
 }

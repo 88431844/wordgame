@@ -41,8 +41,7 @@ public class LoginController {
     session.setAttribute("childId", null);
     modelAndView.addObject("message", "登出成功");
 
-    modelAndView.setViewName("front/word/wordList");
-    return modelAndView;
+    return wordController.initChildWordList(modelAndView,null);
   }
 
 }

@@ -183,7 +183,7 @@
                                                             <input onclick="startRecording()" type="button" value="录音" />
                                                             <input onclick="stopRecording()" type="button" value="停止" />
                                                             <input onclick="playRecording()" type="button" value="播放" />
-                                                            <input onclick="uploadAudio()" type="button" value="提交" />
+                                                            <input onclick="uploadAudio('${childWordDtoList.wordName}','${childWordDtoList.wordId}')" type="button" value="提交" />
                                                         </div>
 
                                                     <script type="text/javascript" src="static/js/HZRecorder.js"></script>
@@ -192,6 +192,11 @@
                                                 var recorder;
                                                 var audio = document.querySelector('audio');
                                                 function startRecording() {
+                                                    var childId = "${sessionScope.childId}";
+                                                    if ("".endsWith(childId)) {
+                                                        alert("请先登录！");
+                                                        return;
+                                                    }
                                                     HZRecorder.get(function (rec) {
                                                         recorder = rec;
                                                         recorder.start();
@@ -201,16 +206,21 @@
                                                     recorder.stop();
                                                 }
                                                 function playRecording() {
+                                                    var childId = "${sessionScope.childId}";
+                                                    if ("".endsWith(childId)) {
+                                                        alert("请先登录！");
+                                                        return;
+                                                    }
                                                     recorder.play(audio);
                                                 }
-                                                function uploadAudio() {
+                                                function uploadAudio(wordname,wordid) {
                                                   var childId = "${sessionScope.childId}";
                                                   if ("".endsWith(childId)) {
                                                     alert("请先登录！");
                                                     return;
                                                   }
-                                                  var wordid = '${childWordDtoList.wordId}';
-                                                  var wordname = '${childWordDtoList.wordName}';
+                                                  <%--var wordid = '${childWordDtoList.wordId}';--%>
+                                                  <%--var wordname = '${childWordDtoList.wordName}';--%>
                                                     recorder.upload("word/asr?wordid="+wordid+"&wordname="+wordname, function (state, e) {
                                                         switch (state) {
                                                             case 'ok':
