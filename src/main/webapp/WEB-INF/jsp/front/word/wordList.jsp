@@ -163,7 +163,7 @@
                                 <c:forEach items="${childWordDtoList}" var="childWordDtoList">
                                     <tr>
 
-                                        <td><span style="font-size: 50px;"><center>${childWordDtoList.wordName}<center></span></td>
+                                        <td><span style="font-size: 150px;"><center>${childWordDtoList.wordName}<center></span></td>
                                         <td><span style="font-size: 20px">${childWordDtoList.wordRoomName}</span></td>
                                         <td><span>${childWordDtoList.rightTimes}</span></td>
                                         <td><span>${childWordDtoList.errorTimes}</span></td>
