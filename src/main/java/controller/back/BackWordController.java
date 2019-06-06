@@ -84,6 +84,8 @@ public class BackWordController {
         modelAndView.setViewName("back/word/listWord");
         List<WordInfoDto> wordInfoDtoList = wordService.listWord();
         modelAndView.addObject("wordInfoDtoList", wordInfoDtoList);
+
+
         return modelAndView;
     }
 }
